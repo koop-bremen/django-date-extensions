@@ -49,9 +49,9 @@ class ApproximateDate(object):
         if self.past:
             return 'past'
         elif self.year and self.month and self.day:
-            return dateformat.format(self, "jS F Y")
+            return dateformat.format(self, "j m Y")
         elif self.year and self.month:
-            return dateformat.format(self, "F Y")
+            return dateformat.format(self, "m Y")
         elif self.year:
             return dateformat.format(self, "Y")
 
@@ -161,15 +161,15 @@ class ApproximateDateField(models.CharField):
 
 # The same as the built-in Django one, but with the d/m/y ones the right way round ;)
 DATE_INPUT_FORMATS = (
-    '%Y-%m-%d', '%d/%m/%Y', '%d/%m/%y', # '2006-10-25', '25/10/2006', '25/10/06'
-    '%b %d %Y', '%b %d, %Y',            # 'Oct 25 2006', 'Oct 25, 2006'
-    '%d %b %Y', '%d %b, %Y',            # '25 Oct 2006', '25 Oct, 2006'
+    '%Y-%m-%d', '%d/%m/%Y', '%d/%m/%y', '%d.%m.%y', # '2006-10-25', '25/10/2006', '25/10/06', '25.10.2006'
+    '%b %d %Y', '%b %d, %Y',                        # 'Oct 25 2006', 'Oct 25, 2006'
+    '%d %b %Y', '%d %b, %Y', '%d. %b. %Y',          # '25 Oct 2006', '25 Oct, 2006', '25. Oct. 2006'
     '%B %d %Y', '%B %d, %Y',            # 'October 25 2006', 'October 25, 2006'
-    '%d %B %Y', '%d %B, %Y',            # '25 October 2006', '25 October, 2006'
+    '%d %B %Y', '%d %B, %Y', '%d. %B %Y',            # '25 October 2006', '25 October, 2006', '25. October 2006'
 )
 MONTH_INPUT_FORMATS = (
     '%m/%Y',                         # '10/2006'
-    '%b %Y', '%Y %b',                # 'Oct 2006', '2006 Oct'
+    '%b %Y', '%Y %b', '%b. %Y',      # 'Oct 2006', '2006 Oct', 'Oct. 2006'
     '%B %Y', '%Y %B',                # 'October 2006', '2006 October'
 )
 YEAR_INPUT_FORMATS = (
