@@ -252,7 +252,7 @@ class PrettyDateField(forms.fields.Field):
                 continue
 
         if self.future is None:
-            raise ValidationError(_('Please enter a valid date.'))
+            raise ValidationError('Please enter a valid date.')
 
         # Allow year to be omitted. Do the sensible thing, either past or future.
         for format in DAY_MONTH_INPUT_FORMATS:
