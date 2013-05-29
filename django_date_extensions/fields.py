@@ -208,7 +208,7 @@ class ApproximateDateFormField(forms.fields.Field):
                 return ApproximateDate(time.strptime(value, format)[0], 0, 0)
             except ValueError:
                 continue
-        raise ValidationError(_('Please enter a valid date.'))
+        raise ValidationError('Please enter a valid date.')
 
 DAY_MONTH_INPUT_FORMATS = (
     '%m-%d', '%d/%m', # '10-25', '25/10'
