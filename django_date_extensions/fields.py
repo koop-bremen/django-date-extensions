@@ -49,7 +49,7 @@ class ApproximateDate(object):
         if self.past:
             return 'past'
         elif self.year and self.month and self.day:
-            return dateformat.format(self, "j m Y")
+            return dateformat.format(self, "j.m.Y")
         elif self.year and self.month:
             return dateformat.format(self, "m Y")
         elif self.year:
