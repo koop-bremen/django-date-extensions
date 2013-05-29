@@ -11,21 +11,21 @@ class ApproximateDate(object):
        know when it is within that month/year."""
     def __init__(self, year=0, month=0, day=0, future=False, past=False):
         if future and past:
-            raise ValueError("Can't be both future and past")
+            raise ValueError(_("Can't be both future and past"))
         elif future or past:
             d = None
             if year or month or day:
-                raise ValueError("Future or past dates can have no year, month or day")
+                raise ValueError(_("Future or past dates can have no year, month or day"))
         elif year and month and day:
             d = date(year, month, day)
         elif year and month:
             d = date(year, month, 1)
         elif year and day:
-            raise ValueError("You cannot specify just a year and a day")
+            raise ValueError(_("You cannot specify just a year and a day"))
         elif year:
             d = date(year, 1, 1)
         else:
-            raise ValueError("You must specify a year")
+            raise ValueError(_("You must specify a year"))
 
         self.future = future
         self.past   = past
@@ -122,7 +122,7 @@ class ApproximateDateField(models.CharField):
             return ApproximateDate(past=True)
 
         if not ansi_date_re.search(value):
-            raise ValidationError('Enter a valid date in YYYY-MM-DD format.')
+            raise ValidationError(_('Enter a valid date in YYYY-MM-DD format.'))
 
         year, month, day = map(int, value.split('-'))
         try:
@@ -144,7 +144,7 @@ class ApproximateDateField(models.CharField):
         if value == 'past':
             return 'past'
         if not ansi_date_re.search(value):
-            raise ValidationError('Enter a valid date in YYYY-MM-DD format.')
+            raise ValidationError(_('Enter a valid date in YYYY-MM-DD format.'))
         return value
 
     def value_to_string(self, obj):
@@ -208,7 +208,7 @@ class ApproximateDateFormField(forms.fields.Field):
                 return ApproximateDate(time.strptime(value, format)[0], 0, 0)
             except ValueError:
                 continue
-        raise ValidationError('Please enter a valid date.')
+        raise ValidationError(_('Please enter a valid date.'))
 
 DAY_MONTH_INPUT_FORMATS = (
     '%m-%d', '%d/%m', # '10-25', '25/10'
@@ -252,7 +252,7 @@ class PrettyDateField(forms.fields.Field):
                 continue
 
         if self.future is None:
-            raise ValidationError('Please enter a valid date.')
+            raise ValidationError(_('Please enter a valid date.'))
 
         # Allow year to be omitted. Do the sensible thing, either past or future.
         for format in DAY_MONTH_INPUT_FORMATS:
@@ -268,5 +268,5 @@ class PrettyDateField(forms.fields.Field):
             except ValueError:
                 continue
 
-        raise ValidationError('Please enter a valid date.')
+        raise ValidationError(_('Please enter a valid date.'))
 
